@@ -1,6 +1,6 @@
 close all
 clear all
-%rand('seed',1234)
+% rand('seed',1233)
 function w = perceptron(X,Y,w_init,ite)
     w=w_init;
     for epoch = 1:ite
@@ -37,8 +37,8 @@ test_data=csvread('iris_data_norm_test.txt');
 complete_data=[train_data' test_data']';
 %complete_data=csvread('iris-virginica');
 %complete_data=csvread('iris-versicolor');
-Einmin=2;
-samples=[ceil(30*151/100) ceil(40*151/100) ceil(50*151/100) ceil(60*151/100) ceil(70*151/100)];
+Einmin=2;k=1;
+samples=[ceil(30*150/100) ceil(40*150/100) ceil(50*150/100) ceil(60*150/100) ceil(70*150/100)];
 for i=samples
     fvec=uniquerandom(i);
 
@@ -46,8 +46,8 @@ for i=samples
     Xtest=complete_data(fvec==0,:);
     Xtrainwo=[ones(1,size(Xtrain)(1))' Xtrain(:,1:4)];
     Xtestwo=[ones(1,size(Xtest)(1))' Xtest(:,1:4)];
-    for it=1:12
-        out=perceptron([ones(1,size(Xtrain)(1))' Xtrain(:,1:4)] ,Xtrain(:,5),[0.5 0.5 0.5 0.5 0.5],2^it);
+    for it=1:100
+        out=perceptron(Xtrainwo ,Xtrain(:,5),[0.5 0.5 0.5 0.5 0.5],it);
         Xtrainout = out*Xtrainwo';
         Xtestout = out*Xtestwo';
         miscount = sum(xor( Xtrainout<0, Xtrain(:,5)'<0 ));
@@ -61,12 +61,16 @@ for i=samples
     end
     figure;
     hold on;
-    plot(1:12,Eout,'g');
-    plot(1:12,Ein,'b');
+    plot(1:100,Eout,'g');
+    plot(1:100,Ein,'bo');
     legend('Eout','Ein');
     lola=floor(i*100/150);
     title( strcat('Ratio : ',mat2str(lola),'-', mat2str(100-lola)) );
     hold off;
-    % Ein
-    % Eout
+    print(strcat(mat2str(lola),'-', mat2str(100-lola),'.jpg'))
+
+    Einh(k,:)= Ein;
+    Eouth(k,:)=Eout;
+    k=k+1;
 end
+save errors.txt Einh Eouth
