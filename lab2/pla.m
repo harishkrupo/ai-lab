@@ -1,5 +1,6 @@
 close all
 clear all
+%% Assumes that the data set will contain the output in the last column
 % rand('seed',1233)
 function w = perceptron(X,Y,w_init,ite)
     w=w_init;
