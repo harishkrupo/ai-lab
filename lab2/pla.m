@@ -44,19 +44,19 @@ for i=samples
 
     Xtrain=complete_data(fvec==1,:);
     Xtest=complete_data(fvec==0,:);
-    Xtrainwo=[ones(1,size(Xtrain)(1))' Xtrain(:,1:4)];
-    Xtestwo=[ones(1,size(Xtest)(1))' Xtest(:,1:4)];
+    Xtrainwo=[ones(1,size(Xtrain)(1))' Xtrain(:,1:size(Xtrain)(2)-1)];
+    Xtestwo=[ones(1,size(Xtest)(1))' Xtest(:,1:size(Xtrain)(2)-1)];
     for it=1:100
-        out=perceptron(Xtrainwo ,Xtrain(:,5),[0.5 0.5 0.5 0.5 0.5],it);
+        out=perceptron(Xtrainwo ,Xtrain(:,size(Xtrain)(2)),[0.5 0.5 0.5 0.5 0.5],it);
         Xtrainout = out*Xtrainwo';
         Xtestout = out*Xtestwo';
-        miscount = sum(xor( Xtrainout<0, Xtrain(:,5)'<0 ));
+        miscount = sum(xor( Xtrainout<0, Xtrain(:,size(Xtrain)(2))'<0 ));
         Ein(it)= miscount/i;
         if(Ein(it)<Einmin)
             Einmin=Ein(it);
             Wmin=out;
         end
-        miscount = sum(xor( Xtestout<0, Xtest(:,5)'<0 ));
+        miscount = sum(xor( Xtestout<0, Xtest(:,size(Xtrain)(2))'<0 ));
         Eout(it)= miscount/(150-i);
     end
     figure;
