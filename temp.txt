@@ -1,0 +1,1 @@
+x=[ones(1,size(train_data)(1))' train_data(:,1:2) train_data(:,1).^2 train_data(:,2).^2 train_data(:,1).*train_data(:,2)];
