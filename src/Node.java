@@ -3,6 +3,12 @@ public class Node {
 	public String state;
 	public Node parent;
 	public int depth;
+	public int priority;
+	
+	public Node()
+	{
+		priority=1;
+	}
 	
 	@Override
 	public String toString()

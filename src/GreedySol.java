@@ -1,17 +1,30 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.PriorityQueue;
 
-public class BfsSol {
+import com.sun.org.apache.bcel.internal.generic.InstructionComparator;
+
+public class GreedySol {
 	private Node init;
 	private TheBoard board;
-	private LinkedList<Node> fringe;
+	private PriorityQueue<Node> fringe;
 	
-	public BfsSol(TheBoard b, String initializer)
+	private class NodeComparator implements Comparator<Node>
+	{
+		@Override
+		public int compare(Node a, Node b)
+		{
+			return a.priority-b.priority;
+		}
+	}
+	
+	public GreedySol(TheBoard b, String initializer)
 	{
 		board=b;
-		fringe = new LinkedList<Node>();
+		Comparator<Node> ci = new NodeComparator();
+		fringe = new PriorityQueue<Node>(ci);
 		this.init=new Node();
 		this.init.state=initializer;
 		this.init.parent=null;
@@ -36,7 +49,7 @@ public class BfsSol {
 				break;
 			}
 			Node staten = fringe.remove();
-//			System.out.println(staten);
+			System.out.println(staten);
 			allSearched.add(staten);
 			nextStates=board.PossibleNextStates(staten.state);
 			for(i=0;i<nextStates.size();i++)
@@ -70,4 +83,5 @@ public class BfsSol {
 	public Node getState() {
 		return fringe.peek();
 	}
+
 }

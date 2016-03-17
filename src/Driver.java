@@ -5,12 +5,13 @@ public class Driver {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		TheBoard b=new TheBoard("413 25786");
+		TheBoard b=new TheBoard("12345678 ");
 		String init = " 13425786";
 //		System.out.println(b.PossibleNextStates(init));
 //		BfsSol sol= new BfsSol(b, init);
 //		DfsSol sol = new DfsSol(b,init);
-		DfsDepthLimited sol = new DfsDepthLimited(b, init, 2);
+//		DfsDepthLimited sol = new DfsDepthLimited(b, init, 2);
+		GreedySol sol= new GreedySol(b, init);
 		ArrayList<Node> searched = sol.findSol();
 		Node finalState = sol.getState();
 		Node t=finalState;
