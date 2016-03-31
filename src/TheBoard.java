@@ -102,4 +102,9 @@ public class TheBoard {
 		}
 		return false;
 	}
+	
+	public String getGoal()
+	{
+		return goalString;
+	}
 }
